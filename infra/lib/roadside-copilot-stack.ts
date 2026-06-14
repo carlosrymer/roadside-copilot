@@ -69,6 +69,9 @@ export class RoadsideCopilotStack extends cdk.Stack {
     // Coverage determination (Claude Opus over the member's policy document).
     this.addRoute(HttpMethod.POST, '/tools/coverage', 'coverage');
 
+    // Next best action: tow vs mobile-repair (Opus) + nearest capable provider.
+    this.addRoute(HttpMethod.POST, '/tools/next-action', 'next-action');
+
     new cdk.CfnOutput(this, 'ApiUrl', { value: this.httpApi.apiEndpoint });
     new cdk.CfnOutput(this, 'SecretArn', { value: this.secret.secretArn });
     new cdk.CfnOutput(this, 'TableName', { value: this.table.tableName });
