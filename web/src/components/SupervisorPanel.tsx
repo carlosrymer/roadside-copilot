@@ -2,6 +2,7 @@ import { useStore } from '../state/store';
 import { IntakeCard } from './IntakeCard';
 import { CoverageCard } from './CoverageCard';
 import { NextActionCard } from './NextActionCard';
+import { AuditLog } from './AuditLog';
 
 /**
  * The human supervisor's console — the co-pilot observability surface. Shows the
@@ -29,6 +30,7 @@ export function SupervisorPanel() {
           <IntakeCard />
           <CoverageCard />
           <NextActionCard />
+          <AuditLog />
         </div>
       )}
     </section>

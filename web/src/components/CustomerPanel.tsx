@@ -2,6 +2,7 @@ import { useStore } from '../state/store';
 import { useRealtime } from '../lib/useRealtime';
 import { StatusBadge } from './StatusBadge';
 import { Transcript } from './Transcript';
+import { SmsInbox } from './SmsInbox';
 
 export function CustomerPanel() {
   const status = useStore((s) => s.status);
@@ -39,24 +40,27 @@ export function CustomerPanel() {
           )}
         </div>
       ) : (
-        <div className="flex flex-1 flex-col gap-3 overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-          <Transcript />
-          <div className="flex items-center justify-between border-t border-slate-800 pt-3">
-            <span className="text-xs text-slate-500">
-              {claimId && (
-                <>
-                  Claim <span className="font-mono text-slate-300">{claimId}</span>
-                </>
-              )}
-            </span>
-            <button
-              onClick={stop}
-              disabled={connecting}
-              className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-500 disabled:opacity-60"
-            >
-              {connecting ? 'Connecting…' : live ? 'End call' : 'Closed'}
-            </button>
+        <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
+          <div className="flex min-h-[14rem] flex-1 flex-col gap-3 overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+            <Transcript />
+            <div className="flex items-center justify-between border-t border-slate-800 pt-3">
+              <span className="text-xs text-slate-500">
+                {claimId && (
+                  <>
+                    Claim <span className="font-mono text-slate-300">{claimId}</span>
+                  </>
+                )}
+              </span>
+              <button
+                onClick={stop}
+                disabled={connecting}
+                className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-500 disabled:opacity-60"
+              >
+                {connecting ? 'Connecting…' : live ? 'End call' : 'Closed'}
+              </button>
+            </div>
           </div>
+          <SmsInbox />
         </div>
       )}
     </section>
