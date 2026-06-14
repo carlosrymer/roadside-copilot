@@ -13,7 +13,7 @@ interface AppState {
 
   setStatus: (status: ConnectionStatus, error?: string) => void;
   mergeClaim: (patch: Partial<Claim>) => void;
-  addTranscript: (line: TranscriptLine) => void;
+  upsertTranscript: (line: TranscriptLine) => void;
   logEvent: (kind: EventKind, message: string) => void;
   reset: () => void;
 }
@@ -36,7 +36,14 @@ export const useStore = create<AppState>((set) => ({
       },
     })),
 
-  addTranscript: (line) => set((s) => ({ transcript: [...s.transcript, line] })),
+  upsertTranscript: (line) =>
+    set((s) => {
+      const idx = s.transcript.findIndex((l) => l.id === line.id);
+      if (idx === -1) return { transcript: [...s.transcript, line] };
+      const next = s.transcript.slice();
+      next[idx] = line;
+      return { transcript: next };
+    }),
 
   logEvent: (kind, message) =>
     set((s) => ({

@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { RealtimeClient } from './realtime';
+import { createServerEventHandler } from './realtimeEvents';
 import { useStore } from '../state/store';
 
 /** React glue around RealtimeClient: starts/stops a session and routes events into the store. */
@@ -19,9 +20,7 @@ export function useRealtime() {
         if (status === 'error' && error) logEvent('warning', error);
       },
       onSessionInfo: ({ claimId }) => mergeClaim({ claimId }),
-      onServerEvent: () => {
-        // Transcript + tool-call handling is wired in the next commit.
-      },
+      onServerEvent: createServerEventHandler({ send: (e) => client.sendEvent(e) }),
     });
     ref.current = client;
     try {
