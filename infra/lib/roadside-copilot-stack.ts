@@ -66,6 +66,9 @@ export class RoadsideCopilotStack extends cdk.Stack {
     // Mint OpenAI Realtime ephemeral tokens for the browser voice session.
     this.addRoute(HttpMethod.POST, '/session', 'session');
 
+    // Coverage determination (Claude Opus over the member's policy document).
+    this.addRoute(HttpMethod.POST, '/tools/coverage', 'coverage');
+
     new cdk.CfnOutput(this, 'ApiUrl', { value: this.httpApi.apiEndpoint });
     new cdk.CfnOutput(this, 'SecretArn', { value: this.secret.secretArn });
     new cdk.CfnOutput(this, 'TableName', { value: this.table.tableName });

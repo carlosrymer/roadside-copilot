@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "AWS CDK app + Lambda handlers for the Roadside Co-Pilot API",
-  "bin": { "roadside-copilot": "bin/app.js" },
+  "bin": {
+    "roadside-copilot": "bin/app.js"
+  },
   "scripts": {
     "build": "tsc",
     "synth": "cdk synth",
@@ -23,7 +25,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.1",
+    "@anthropic-ai/sdk": "^0.104.1",
     "aws-cdk-lib": "^2.170.0",
     "constructs": "^10.4.2"
   }
