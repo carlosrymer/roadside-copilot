@@ -1,0 +1,62 @@
+[
+  {
+    "id": "G-001",
+    "name": "Lone Star Auto & Tow",
+    "lat": 30.2711,
+    "lng": -97.7437,
+    "address": "412 Congress Ave, Austin, TX 78701",
+    "phone": "+1-512-555-0301",
+    "capabilities": ["tow", "mobile_repair", "battery", "tire", "lockout"],
+    "hours": "24/7",
+    "rating": 4.7,
+    "avgDispatchMinutes": 25
+  },
+  {
+    "id": "G-002",
+    "name": "Capitol Mobile Mechanics",
+    "lat": 30.2638,
+    "lng": -97.7594,
+    "address": "1900 S Lamar Blvd, Austin, TX 78704",
+    "phone": "+1-512-555-0312",
+    "capabilities": ["mobile_repair", "battery", "tire", "fuel"],
+    "hours": "06:00-22:00",
+    "rating": 4.5,
+    "avgDispatchMinutes": 20
+  },
+  {
+    "id": "G-003",
+    "name": "North Loop Towing Co.",
+    "lat": 30.3915,
+    "lng": -97.7250,
+    "address": "9203 Burnet Rd, Austin, TX 78758",
+    "phone": "+1-512-555-0327",
+    "capabilities": ["tow", "battery", "winch"],
+    "hours": "24/7",
+    "rating": 4.3,
+    "avgDispatchMinutes": 30
+  },
+  {
+    "id": "G-004",
+    "name": "Riverside Collision & Recovery",
+    "lat": 30.2351,
+    "lng": -97.7110,
+    "address": "2300 E Riverside Dr, Austin, TX 78741",
+    "phone": "+1-512-555-0334",
+    "capabilities": ["tow", "collision_recovery", "winch", "flatbed"],
+    "hours": "24/7",
+    "rating": 4.6,
+    "avgDispatchMinutes": 35
+  },
+  {
+    "id": "G-005",
+    "name": "Hill Country Roadside",
+    "lat": 30.3077,
+    "lng": -97.8550,
+    "address": "6500 Bee Cave Rd, Austin, TX 78746",
+    "phone": "+1-512-555-0349",
+    "capabilities": ["tow", "mobile_repair", "battery", "tire", "fuel", "lockout"],
+    "hours": "24/7",
+    "rating": 4.8,
+    "avgDispatchMinutes": 40
+  }
+]

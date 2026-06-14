@@ -1,0 +1,53 @@
+{
+  "MAM-48213": {
+    "memberId": "MAM-48213",
+    "name": "Maria Gonzalez",
+    "phone": "+1-512-555-0142",
+    "policyForm": "RA-PREMIUM-2026",
+    "policyStatus": "active",
+    "serviceCallsUsedThisYear": 1,
+    "vehicle": {
+      "year": 2022,
+      "make": "Toyota",
+      "model": "Camry",
+      "plate": "TX-8W4K21",
+      "registered": true,
+      "use": "personal"
+    },
+    "homeBase": { "lat": 30.2672, "lng": -97.7431, "label": "Austin, TX (home)" }
+  },
+  "MAM-71920": {
+    "memberId": "MAM-71920",
+    "name": "James Carter",
+    "phone": "+1-512-555-0188",
+    "policyForm": "RA-STANDARD-2026",
+    "policyStatus": "active",
+    "serviceCallsUsedThisYear": 3,
+    "vehicle": {
+      "year": 2019,
+      "make": "Ford",
+      "model": "F-150",
+      "plate": "TX-3RJ908",
+      "registered": true,
+      "use": "personal"
+    },
+    "homeBase": { "lat": 30.2241, "lng": -97.7560, "label": "South Austin, TX (home)" }
+  },
+  "MAM-33057": {
+    "memberId": "MAM-33057",
+    "name": "Aisha Khan",
+    "phone": "+1-512-555-0173",
+    "policyForm": "RA-BASIC-2026",
+    "policyStatus": "active",
+    "serviceCallsUsedThisYear": 0,
+    "vehicle": {
+      "year": 2017,
+      "make": "Honda",
+      "model": "Civic",
+      "plate": "TX-1PQ455",
+      "registered": true,
+      "use": "personal"
+    },
+    "homeBase": { "lat": 30.3960, "lng": -97.7290, "label": "North Austin, TX (home)" }
+  }
+}

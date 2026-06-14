@@ -1,0 +1,44 @@
+{
+  "RA-PREMIUM-2026": {
+    "policyForm": "RA-PREMIUM-2026",
+    "plan": "Premium",
+    "underwriter": "Meridian Auto Mutual",
+    "document": "policy-docs/premium.md",
+    "summary": {
+      "coveredServices": ["towing", "jump_start", "flat_tire", "fuel_delivery", "lockout", "winching", "collision_recovery"],
+      "serviceCallsPerYear": 6,
+      "towingDistanceMiles": 100,
+      "perCallBenefitCapUsd": null,
+      "tripInterruptionUsd": 150,
+      "exclusions": ["commercial_use", "racing", "off_road", "dui", "unregistered_vehicle", "routine_maintenance"]
+    }
+  },
+  "RA-STANDARD-2026": {
+    "policyForm": "RA-STANDARD-2026",
+    "plan": "Standard",
+    "underwriter": "Meridian Auto Mutual",
+    "document": "policy-docs/standard.md",
+    "summary": {
+      "coveredServices": ["towing", "jump_start", "flat_tire", "fuel_delivery", "lockout", "collision_recovery"],
+      "serviceCallsPerYear": 4,
+      "towingDistanceMiles": 50,
+      "perCallBenefitCapUsd": 100,
+      "tripInterruptionUsd": 0,
+      "exclusions": ["winching", "commercial_use", "racing", "off_road", "dui", "unregistered_vehicle", "routine_maintenance"]
+    }
+  },
+  "RA-BASIC-2026": {
+    "policyForm": "RA-BASIC-2026",
+    "plan": "Basic",
+    "underwriter": "Meridian Auto Mutual",
+    "document": "policy-docs/basic.md",
+    "summary": {
+      "coveredServices": ["towing", "jump_start", "flat_tire", "fuel_delivery"],
+      "serviceCallsPerYear": 2,
+      "towingDistanceMiles": 15,
+      "perCallBenefitCapUsd": 75,
+      "tripInterruptionUsd": 0,
+      "exclusions": ["lockout", "winching", "collision_recovery", "commercial_use", "racing", "off_road", "dui", "unregistered_vehicle"]
+    }
+  }
+}
