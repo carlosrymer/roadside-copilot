@@ -4,7 +4,9 @@ import type {
   Claim,
   ConnectionStatus,
   CoverageResult,
+  DispatchStatus,
   EventKind,
+  NextActionResult,
   TranscriptLine,
 } from '../types';
 
@@ -16,12 +18,16 @@ interface AppState {
   error?: string;
   claim: Claim;
   coverage?: CoverageResult;
+  nextAction?: NextActionResult;
+  dispatch: DispatchStatus;
   transcript: TranscriptLine[];
   events: AuditEvent[];
 
   setStatus: (status: ConnectionStatus, error?: string) => void;
   mergeClaim: (patch: Partial<Claim>) => void;
   setCoverage: (coverage: CoverageResult) => void;
+  setNextAction: (nextAction: NextActionResult) => void;
+  setDispatch: (dispatch: DispatchStatus) => void;
   upsertTranscript: (line: TranscriptLine) => void;
   logEvent: (kind: EventKind, message: string) => void;
   reset: () => void;
@@ -30,12 +36,17 @@ interface AppState {
 export const useStore = create<AppState>((set) => ({
   status: 'idle',
   claim: {},
+  dispatch: 'idle',
   transcript: [],
   events: [],
 
   setStatus: (status, error) => set({ status, error }),
 
   setCoverage: (coverage) => set({ coverage }),
+
+  setNextAction: (nextAction) => set({ nextAction }),
+
+  setDispatch: (dispatch) => set({ dispatch }),
 
   mergeClaim: (patch) =>
     set((s) => ({
@@ -62,5 +73,14 @@ export const useStore = create<AppState>((set) => ({
     })),
 
   reset: () =>
-    set({ status: 'idle', error: undefined, claim: {}, coverage: undefined, transcript: [], events: [] }),
+    set({
+      status: 'idle',
+      error: undefined,
+      claim: {},
+      coverage: undefined,
+      nextAction: undefined,
+      dispatch: 'idle',
+      transcript: [],
+      events: [],
+    }),
 }));

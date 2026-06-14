@@ -1,6 +1,6 @@
 import { useStore } from '../state/store';
 import { apiUrl } from '../config';
-import type { Claim, CoverageResult } from '../types';
+import type { Claim, CoverageResult, NextActionResult } from '../types';
 
 /**
  * Executes a tool the voice agent invoked and returns a JSON-able result that is
@@ -53,8 +53,45 @@ export async function executeTool(name: string, args: Record<string, unknown>): 
       }
     }
 
+    case 'find_next_action': {
+      const { claim } = store;
+      store.logEvent('tool', 'Finding nearest provider…');
+      try {
+        const res = await fetch(apiUrl('/tools/next-action'), {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            memberId: claim.memberId,
+            problemType: (args.problemType as string) ?? claim.problemType,
+            driveable: (args.driveable as boolean) ?? claim.driveable,
+            locationDescription: claim.location?.description,
+          }),
+        });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const data = (await res.json()) as NextActionResult;
+        store.setNextAction(data);
+        store.setDispatch('pending');
+        store.logEvent(
+          'decision',
+          `Recommended ${data.decision.serviceType.replace(/_/g, ' ')}${
+            data.provider ? ` via ${data.provider.name} (~${data.provider.etaMinutes} min)` : ''
+          } — awaiting approval`,
+        );
+        return {
+          serviceType: data.decision.serviceType,
+          provider: data.provider?.name,
+          etaMinutes: data.provider?.etaMinutes,
+          customerSummary: data.decision.customerSummary,
+          awaitingHumanApproval: true,
+        };
+      } catch (e) {
+        store.logEvent('warning', 'Could not find a provider');
+        return { error: e instanceof Error ? e.message : 'next-action failed' };
+      }
+    }
+
     default:
-      // Implemented in later commits (coverage, next-action, notify).
+      // Implemented in a later commit (notify).
       store.logEvent('tool', `Agent called ${name} (not yet available)`);
       return { status: 'pending', message: 'This step is being set up.' };
   }

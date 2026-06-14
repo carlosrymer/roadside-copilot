@@ -78,6 +78,32 @@ export interface CoverageResult {
   determination: CoverageDetermination;
 }
 
+export interface ActionDecision {
+  serviceType: 'tow' | 'mobile_repair';
+  requiredCapability: string;
+  reasoning: string;
+  customerSummary: string;
+}
+
+export interface NextActionProvider {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  distanceMiles: number;
+  etaMinutes: number;
+  rating: number;
+}
+
+export interface NextActionResult {
+  decision: ActionDecision;
+  origin: { label: string };
+  provider: NextActionProvider | null;
+  alternatives: { id: string; name: string; distanceMiles: number; etaMinutes: number }[];
+}
+
+export type DispatchStatus = 'idle' | 'pending' | 'approved' | 'overridden' | 'escalated';
+
 export type EventKind = 'info' | 'tool' | 'decision' | 'action' | 'warning';
 
 export interface AuditEvent {
