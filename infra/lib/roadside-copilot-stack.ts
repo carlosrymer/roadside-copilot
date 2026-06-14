@@ -63,6 +63,9 @@ export class RoadsideCopilotStack extends cdk.Stack {
     // Baseline route to confirm the stack deploys and CORS works end-to-end.
     this.addRoute(HttpMethod.GET, '/health', 'health');
 
+    // Mint OpenAI Realtime ephemeral tokens for the browser voice session.
+    this.addRoute(HttpMethod.POST, '/session', 'session');
+
     new cdk.CfnOutput(this, 'ApiUrl', { value: this.httpApi.apiEndpoint });
     new cdk.CfnOutput(this, 'SecretArn', { value: this.secret.secretArn });
     new cdk.CfnOutput(this, 'TableName', { value: this.table.tableName });
