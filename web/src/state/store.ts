@@ -7,6 +7,7 @@ import type {
   DispatchStatus,
   EventKind,
   NextActionResult,
+  Notification,
   TranscriptLine,
 } from '../types';
 
@@ -20,6 +21,8 @@ interface AppState {
   coverage?: CoverageResult;
   nextAction?: NextActionResult;
   dispatch: DispatchStatus;
+  draftSummary?: string;
+  notifications: Notification[];
   transcript: TranscriptLine[];
   events: AuditEvent[];
 
@@ -28,6 +31,8 @@ interface AppState {
   setCoverage: (coverage: CoverageResult) => void;
   setNextAction: (nextAction: NextActionResult) => void;
   setDispatch: (dispatch: DispatchStatus) => void;
+  setDraftSummary: (summary: string) => void;
+  addNotification: (n: Notification) => void;
   upsertTranscript: (line: TranscriptLine) => void;
   logEvent: (kind: EventKind, message: string) => void;
   reset: () => void;
@@ -37,6 +42,7 @@ export const useStore = create<AppState>((set) => ({
   status: 'idle',
   claim: {},
   dispatch: 'idle',
+  notifications: [],
   transcript: [],
   events: [],
 
@@ -47,6 +53,10 @@ export const useStore = create<AppState>((set) => ({
   setNextAction: (nextAction) => set({ nextAction }),
 
   setDispatch: (dispatch) => set({ dispatch }),
+
+  setDraftSummary: (draftSummary) => set({ draftSummary }),
+
+  addNotification: (n) => set((s) => ({ notifications: [...s.notifications, n] })),
 
   mergeClaim: (patch) =>
     set((s) => ({
@@ -80,6 +90,8 @@ export const useStore = create<AppState>((set) => ({
       coverage: undefined,
       nextAction: undefined,
       dispatch: 'idle',
+      draftSummary: undefined,
+      notifications: [],
       transcript: [],
       events: [],
     }),

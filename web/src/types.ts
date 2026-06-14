@@ -104,6 +104,13 @@ export interface NextActionResult {
 
 export type DispatchStatus = 'idle' | 'pending' | 'approved' | 'overridden' | 'escalated';
 
+export interface Notification {
+  id: string;
+  to: string;
+  message: string;
+  sentAt: string;
+}
+
 export type EventKind = 'info' | 'tool' | 'decision' | 'action' | 'warning';
 
 export interface AuditEvent {

@@ -90,10 +90,16 @@ export async function executeTool(name: string, args: Record<string, unknown>): 
       }
     }
 
+    case 'send_update': {
+      const summary = (args.summary as string) ?? '';
+      store.setDraftSummary(summary);
+      store.logEvent('tool', 'Agent drafted customer update — pending supervisor approval');
+      return { status: 'staged', message: 'Update staged. It will be sent once a supervisor approves.' };
+    }
+
     default:
-      // Implemented in a later commit (notify).
-      store.logEvent('tool', `Agent called ${name} (not yet available)`);
-      return { status: 'pending', message: 'This step is being set up.' };
+      store.logEvent('tool', `Agent called ${name} (no handler)`);
+      return { status: 'pending', message: 'This step is not available.' };
   }
 }
 

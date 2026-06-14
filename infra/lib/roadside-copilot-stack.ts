@@ -72,6 +72,9 @@ export class RoadsideCopilotStack extends cdk.Stack {
     // Next best action: tow vs mobile-repair (Opus) + nearest capable provider.
     this.addRoute(HttpMethod.POST, '/tools/next-action', 'next-action');
 
+    // Compose + "send" the customer SMS and persist the claim/notification.
+    this.addRoute(HttpMethod.POST, '/tools/notify', 'notify');
+
     new cdk.CfnOutput(this, 'ApiUrl', { value: this.httpApi.apiEndpoint });
     new cdk.CfnOutput(this, 'SecretArn', { value: this.secret.secretArn });
     new cdk.CfnOutput(this, 'TableName', { value: this.table.tableName });
