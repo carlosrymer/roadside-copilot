@@ -1,5 +1,6 @@
 import { useStore } from '../state/store';
-import type { Claim } from '../types';
+import { apiUrl } from '../config';
+import type { Claim, CoverageResult } from '../types';
 
 /**
  * Executes a tool the voice agent invoked and returns a JSON-able result that is
@@ -19,6 +20,37 @@ export async function executeTool(name: string, args: Record<string, unknown>): 
         store.logEvent('warning', 'Injuries reported — safety escalation may be required');
       }
       return { ok: true };
+    }
+
+    case 'check_coverage': {
+      store.logEvent('tool', 'Checking policy coverage…');
+      try {
+        const res = await fetch(apiUrl('/tools/coverage'), {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(args),
+        });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const data = (await res.json()) as CoverageResult;
+        store.setCoverage(data);
+        const d = data.determination;
+        store.logEvent(
+          'decision',
+          `Coverage: ${d.decision.replace(/_/g, ' ')} (${Math.round(d.confidence * 100)}% confidence)`,
+        );
+        if (d.requiresHumanReview) store.logEvent('warning', 'Flagged for human review');
+        // Compact result the agent can speak from; full detail is in the console.
+        return {
+          decision: d.decision,
+          covered: data.covered ?? false,
+          recommendedService: d.recommendedService,
+          customerSummary: d.customerSummary,
+          requiresHumanReview: d.requiresHumanReview,
+        };
+      } catch (e) {
+        store.logEvent('warning', 'Coverage check failed');
+        return { error: e instanceof Error ? e.message : 'coverage check failed' };
+      }
     }
 
     default:

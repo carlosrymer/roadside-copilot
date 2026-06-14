@@ -44,6 +44,40 @@ export interface TranscriptLine {
   final: boolean;
 }
 
+export type CoverageDecision = 'covered' | 'not_covered' | 'partial' | 'needs_review';
+
+export interface CitedClause {
+  clause: string;
+  quote: string;
+}
+
+export interface CoverageDetermination {
+  decision: CoverageDecision;
+  confidence: number;
+  citedClauses: CitedClause[];
+  rationale: string;
+  recommendedService: string;
+  customerSummary: string;
+  requiresHumanReview: boolean;
+}
+
+export interface CoverageMember {
+  name: string;
+  memberId: string;
+  plan: string;
+  policyForm: string;
+  callsUsed: number;
+  callsAllowed: number;
+  towingDistanceMiles: number;
+}
+
+export interface CoverageResult {
+  memberFound: boolean;
+  member?: CoverageMember;
+  covered?: boolean;
+  determination: CoverageDetermination;
+}
+
 export type EventKind = 'info' | 'tool' | 'decision' | 'action' | 'warning';
 
 export interface AuditEvent {

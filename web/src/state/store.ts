@@ -1,5 +1,12 @@
 import { create } from 'zustand';
-import type { AuditEvent, Claim, ConnectionStatus, EventKind, TranscriptLine } from '../types';
+import type {
+  AuditEvent,
+  Claim,
+  ConnectionStatus,
+  CoverageResult,
+  EventKind,
+  TranscriptLine,
+} from '../types';
 
 let seq = 0;
 const nextId = () => `${Date.now()}-${seq++}`;
@@ -8,11 +15,13 @@ interface AppState {
   status: ConnectionStatus;
   error?: string;
   claim: Claim;
+  coverage?: CoverageResult;
   transcript: TranscriptLine[];
   events: AuditEvent[];
 
   setStatus: (status: ConnectionStatus, error?: string) => void;
   mergeClaim: (patch: Partial<Claim>) => void;
+  setCoverage: (coverage: CoverageResult) => void;
   upsertTranscript: (line: TranscriptLine) => void;
   logEvent: (kind: EventKind, message: string) => void;
   reset: () => void;
@@ -25,6 +34,8 @@ export const useStore = create<AppState>((set) => ({
   events: [],
 
   setStatus: (status, error) => set({ status, error }),
+
+  setCoverage: (coverage) => set({ coverage }),
 
   mergeClaim: (patch) =>
     set((s) => ({
@@ -50,5 +61,6 @@ export const useStore = create<AppState>((set) => ({
       events: [...s.events, { id: nextId(), at: new Date().toISOString(), kind, message }],
     })),
 
-  reset: () => set({ status: 'idle', error: undefined, claim: {}, transcript: [], events: [] }),
+  reset: () =>
+    set({ status: 'idle', error: undefined, claim: {}, coverage: undefined, transcript: [], events: [] }),
 }));
