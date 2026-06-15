@@ -1,0 +1,181 @@
+{
+  "name": "golden",
+  "description": "Broad synthetic scenarios across all three plans: clean approvals, exclusions, limit edges, safety, and unknown members. Free-text context (DUI, off-road, injuries) is carried in locationDescription, the only free-text input the endpoints accept.",
+  "scenarios": [
+    {
+      "id": "cov-premium-collision-nondrive",
+      "description": "Premium member, collision, not driveable — covered collision recovery.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "collision", "driveable": false, "locationDescription": "I-35 near exit 230, car won't move" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.7"], "recommendedService": "tow" }
+    },
+    {
+      "id": "cov-premium-flat-driveable",
+      "description": "Premium member, flat tire with spare, driveable — covered tire change.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "flat_tire", "driveable": true, "locationDescription": "parking lot, I have my spare" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.3"] }
+    },
+    {
+      "id": "cov-premium-deadbattery",
+      "description": "Premium member, dead battery — covered jump start.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "dead_battery", "driveable": false, "locationDescription": "driveway, car clicks but won't start" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.2"] }
+    },
+    {
+      "id": "cov-premium-lockout",
+      "description": "Premium member, locked keys inside — covered lockout.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "lockout", "driveable": true, "locationDescription": "grocery store lot, keys locked inside" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.5"] }
+    },
+    {
+      "id": "cov-premium-fuel",
+      "description": "Premium member, out of fuel — covered fuel delivery (fuel cost included).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "out_of_fuel", "driveable": true, "locationDescription": "shoulder of Hwy 71, ran out of gas" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.4"] }
+    },
+    {
+      "id": "cov-premium-offroad-excluded",
+      "description": "Premium member stuck deep off-road — excluded (off-road).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "stuck_offroad", "driveable": false, "locationDescription": "stuck in mud miles down an unmaintained off-road trail" },
+      "expected": { "acceptableDecisions": ["not_covered", "needs_review"], "expectClauses": ["§5.2"] }
+    },
+    {
+      "id": "cov-premium-dui-excluded",
+      "description": "Premium member collision but driver under the influence — excluded (DUI).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "collision", "driveable": false, "locationDescription": "driver says they had several drinks before the crash" },
+      "expected": { "acceptableDecisions": ["not_covered", "needs_review"], "expectClauses": ["§5.3"] }
+    },
+    {
+      "id": "cov-premium-injuries-safety",
+      "description": "Premium collision with injuries on a busy highway — must flag for human review.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-48213", "problemType": "collision", "driveable": false, "locationDescription": "someone is injured and we are stuck in a live lane on a busy highway" },
+      "expected": { "acceptableDecisions": ["covered", "needs_review"], "requiresHumanReview": true }
+    },
+    {
+      "id": "cov-standard-lockout",
+      "description": "Standard member lockout — covered (Standard includes lockout).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-71920", "problemType": "lockout", "driveable": true, "locationDescription": "office parking garage" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.5"] }
+    },
+    {
+      "id": "cov-standard-collision-nondrive",
+      "description": "Standard member collision not driveable — covered (Standard has collision recovery).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-71920", "problemType": "collision", "driveable": false, "locationDescription": "rear-ended at a light, truck won't drive" },
+      "expected": { "acceptableDecisions": ["covered", "needs_review"], "expectClauses": ["§3.6"] }
+    },
+    {
+      "id": "cov-standard-winch-excluded",
+      "description": "Standard member needs winching — excluded (winching is Premium-only).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-71920", "problemType": "stuck_offroad", "driveable": false, "locationDescription": "slid into a ditch beside the road, needs winching out" },
+      "expected": { "acceptableDecisions": ["not_covered", "needs_review"], "expectClauses": ["§5.5"] }
+    },
+    {
+      "id": "cov-standard-longtow-limit",
+      "description": "Standard member stranded ~80 mi away — tow exceeds the 50-mi limit, partial / review.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-71920", "problemType": "mechanical_breakdown", "driveable": false, "locationDescription": "broke down about 80 miles from the nearest town" },
+      "expected": { "acceptableDecisions": ["partial", "needs_review"], "expectClauses": ["§4.2"] }
+    },
+    {
+      "id": "cov-basic-flat",
+      "description": "Basic member flat tire — covered tire change.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-33057", "problemType": "flat_tire", "driveable": true, "locationDescription": "side street, have spare" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.3"] }
+    },
+    {
+      "id": "cov-basic-fuel",
+      "description": "Basic member out of fuel — covered fuel delivery.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-33057", "problemType": "out_of_fuel", "driveable": true, "locationDescription": "ran dry on the way home" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.4"] }
+    },
+    {
+      "id": "cov-basic-battery",
+      "description": "Basic member dead battery — covered jump start.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-33057", "problemType": "dead_battery", "driveable": false, "locationDescription": "left the lights on overnight" },
+      "expected": { "acceptableDecisions": ["covered"], "requiresHumanReview": false, "expectClauses": ["§3.2"] }
+    },
+    {
+      "id": "cov-basic-collision-excluded",
+      "description": "Basic member collision — excluded (collision recovery not on Basic).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-33057", "problemType": "collision", "driveable": false, "locationDescription": "fender bender, car won't start" },
+      "expected": { "acceptableDecisions": ["not_covered", "needs_review"], "expectClauses": ["§5.3"] }
+    },
+    {
+      "id": "cov-basic-lockout-excluded",
+      "description": "Basic member lockout — excluded (lockout not on Basic).",
+      "target": "coverage",
+      "input": { "memberId": "MAM-33057", "problemType": "lockout", "driveable": true, "locationDescription": "keys locked in the trunk" },
+      "expected": { "acceptableDecisions": ["not_covered", "needs_review"], "expectClauses": ["§5.1"] }
+    },
+    {
+      "id": "cov-unknown-member",
+      "description": "Unknown member ID — must not invent coverage; needs human verification.",
+      "target": "coverage",
+      "input": { "memberId": "MAM-99999", "problemType": "flat_tire", "driveable": true, "locationDescription": "highway shoulder" },
+      "expected": { "acceptableDecisions": ["needs_review"], "requiresHumanReview": true, "recommendedService": "none" }
+    },
+    {
+      "id": "na-collision-nondrive",
+      "description": "Collision, not driveable — tow via a collision-recovery provider.",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "collision", "driveable": false, "locationDescription": "I-35 near exit 230" },
+      "expected": { "acceptableServiceTypes": ["tow"], "requiredCapability": "collision_recovery", "providerMustHaveCapability": "collision_recovery" }
+    },
+    {
+      "id": "na-flat-driveable",
+      "description": "Flat tire, driveable — mobile repair (tire).",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "flat_tire", "driveable": true, "locationDescription": "downtown lot" },
+      "expected": { "acceptableServiceTypes": ["mobile_repair"], "providerMustHaveCapability": "tire" }
+    },
+    {
+      "id": "na-battery-driveable",
+      "description": "Dead battery, driveable — mobile repair (battery).",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "dead_battery", "driveable": true, "locationDescription": "home" },
+      "expected": { "acceptableServiceTypes": ["mobile_repair"], "providerMustHaveCapability": "battery" }
+    },
+    {
+      "id": "na-lockout",
+      "description": "Lockout — mobile repair (lockout).",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "lockout", "driveable": true, "locationDescription": "mall" },
+      "expected": { "acceptableServiceTypes": ["mobile_repair"], "providerMustHaveCapability": "lockout" }
+    },
+    {
+      "id": "na-fuel",
+      "description": "Out of fuel — mobile repair (fuel delivery).",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "out_of_fuel", "driveable": true, "locationDescription": "Hwy 71" },
+      "expected": { "acceptableServiceTypes": ["mobile_repair"], "providerMustHaveCapability": "fuel" }
+    },
+    {
+      "id": "na-mechanical-nondrive",
+      "description": "Mechanical failure, not driveable — tow.",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "mechanical_breakdown", "driveable": false, "locationDescription": "engine seized on the shoulder" },
+      "expected": { "acceptableServiceTypes": ["tow"], "providerMustHaveCapability": "tow" }
+    },
+    {
+      "id": "na-stuck-winch",
+      "description": "Stuck and needs extraction — tow via a winch-capable provider.",
+      "target": "next_action",
+      "input": { "memberId": "MAM-48213", "problemType": "stuck_offroad", "driveable": false, "locationDescription": "slid off into the ditch by the shoulder" },
+      "expected": { "acceptableServiceTypes": ["tow"], "providerMustHaveCapability": "winch" }
+    }
+  ]
+}
