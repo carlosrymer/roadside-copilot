@@ -5,7 +5,6 @@ node_modules/
 # Build output
 web/dist/
 infra/cdk.out/
-evals/report/
 *.tsbuildinfo
 
 # Env / secrets — never commit

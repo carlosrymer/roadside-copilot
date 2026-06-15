@@ -90,16 +90,16 @@ sequenceDiagram
 - **Per-route Lambdas behind one HTTP API.** Each tool is an isolated function; `addRoute()` wires a
   new one in a line. DynamoDB stores the claim snapshot + an append-only audit/notification trail.
 
-## Quality & evals
+## Quality & evals (planned fast-follow)
 
-The reasoning endpoints are evaluated offline against a golden dataset (`evals/`) on a four-dimension
-rubric: **guided outcome** (correct decision), **tool call** (valid structured output + correct
-service/capability/provider), **hallucination** (every cited clause quote must be verbatim in the source
-policy), and **relevance** (Claude Opus LLM-as-judge, report-only). The deterministic dimensions form a
-**regression gate** that runs in CI against the live API on any change to `evals/`, `infra/lambda/`, or
-`data/` — keys stay server-side, so CI needs no secrets. This makes coverage accuracy and
-citation-faithfulness measurable and regression-proof, which is essential for an auditable insurance
-decision. See [../evals/README.md](../evals/README.md).
+Out of scope for the day-one prototype, but the immediate next step. The plan is to score the reasoning
+endpoints against a golden dataset on a four-dimension rubric — **guided outcome** (correct decision),
+**tool call** (valid structured output + correct service/capability/provider), **hallucination** (every
+cited clause quote verbatim in the source policy), and **relevance** (LLM-as-judge) — with the
+deterministic dimensions forming a **CI regression gate** against the live API (keys stay server-side,
+so CI needs no secrets). This makes coverage accuracy and citation-faithfulness measurable and
+regression-proof, which is essential for an auditable insurance decision. A working spike lives on the
+`spike/evals` branch.
 
 ## Production note
 
