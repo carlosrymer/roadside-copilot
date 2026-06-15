@@ -35,6 +35,7 @@ Customer (voice)  ──WebRTC──►  OpenAI Realtime  ──function calls�
 | `web/`   | Vite + React + TypeScript SPA (deploys to GitHub Pages) |
 | `infra/` | AWS CDK app + Lambda handlers (API Gateway, DynamoDB, Secrets Manager) |
 | `data/`  | Synthetic policies, policy documents, garages, customers |
+| `evals/` | Golden-dataset eval harness + CI regression gate (rubric: relevance, tool-call, hallucination, guided outcome) |
 | `docs/`  | PRD (≤2 pages) + architecture |
 
 ## Run it
