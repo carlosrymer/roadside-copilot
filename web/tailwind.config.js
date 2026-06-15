@@ -4,8 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#0f172a',
-        panel: '#111827',
+        // Dependable blue — the trust/safety anchor for the auto-insurance audience.
+        brand: {
+          DEFAULT: '#2563eb',
+          dark: '#1d4ed8',
+          light: '#eff6ff',
+        },
       },
     },
   },

@@ -18,43 +18,43 @@ export function CustomerPanel() {
     <section className="flex h-full flex-col gap-4">
       <header className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Roadside Assistance</h2>
-          <p className="text-sm text-slate-400">Talk to Mira, your assistance agent</p>
+          <h2 className="text-lg font-semibold text-slate-900">Roadside Assistance</h2>
+          <p className="text-sm text-slate-500">Talk to Mira, your assistance agent</p>
         </div>
         <StatusBadge status={status} />
       </header>
 
       {!active ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-6 rounded-xl border border-slate-800 bg-slate-900/60 p-8">
+        <div className="flex flex-1 flex-col items-center justify-center gap-6 rounded-xl border border-slate-200 bg-slate-50 p-8">
           <button
             onClick={start}
-            className="flex h-28 w-28 items-center justify-center rounded-full bg-emerald-600 text-base font-semibold text-white shadow-lg transition hover:bg-emerald-500"
+            className="flex h-28 w-28 items-center justify-center rounded-full bg-brand text-base font-semibold text-white shadow-md transition hover:bg-brand-dark focus:outline-none focus:ring-4 focus:ring-brand/30"
           >
             Start call
           </button>
-          <p className="text-center text-sm text-slate-400">
-            Press to start. You will be asked to allow microphone access.
+          <p className="text-center text-sm text-slate-500">
+            Press to start. You'll be asked to allow microphone access.
           </p>
           {status === 'error' && error && (
-            <p className="rounded-md bg-rose-950/60 px-3 py-2 text-center text-sm text-rose-300">{error}</p>
+            <p className="rounded-md bg-rose-50 px-3 py-2 text-center text-sm text-rose-700">{error}</p>
           )}
         </div>
       ) : (
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto">
-          <div className="flex min-h-[14rem] flex-1 flex-col gap-3 overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+          <div className="flex min-h-[14rem] flex-1 flex-col gap-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-4">
             <Transcript />
-            <div className="flex items-center justify-between border-t border-slate-800 pt-3">
+            <div className="flex items-center justify-between border-t border-slate-200 pt-3">
               <span className="text-xs text-slate-500">
                 {claimId && (
                   <>
-                    Claim <span className="font-mono text-slate-300">{claimId}</span>
+                    Claim <span className="font-mono text-slate-700">{claimId}</span>
                   </>
                 )}
               </span>
               <button
                 onClick={stop}
                 disabled={connecting}
-                className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-500 disabled:opacity-60"
+                className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-700 disabled:opacity-60"
               >
                 {connecting ? 'Connecting…' : live ? 'End call' : 'Closed'}
               </button>
