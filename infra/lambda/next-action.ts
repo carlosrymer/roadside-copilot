@@ -40,15 +40,19 @@ const SCHEMA = {
       description: 'The specific provider capability needed to handle this case.',
     },
     reasoning: { type: 'string', description: 'Why this service was chosen (for the supervisor).' },
-    customerSummary: { type: 'string', description: 'Plain-language summary for the customer.' },
+    customerSummary: {
+      type: 'string',
+      description:
+        'Plain-language line for the customer, framed as help being ARRANGED and pending confirmation — never state a truck has been sent or is on the way.',
+    },
   },
   required: ['serviceType', 'requiredCapability', 'reasoning', 'customerSummary'],
 };
 
 const SYSTEM = `
-You dispatch roadside assistance. Given the problem and whether the vehicle is
-driveable, decide whether to send a TOW truck or a MOBILE-REPAIR truck, and the
-specific capability required.
+You RECOMMEND roadside assistance for a human supervisor to approve. Given the
+problem and whether the vehicle is driveable, decide whether the recommended help
+is a TOW truck or a MOBILE-REPAIR truck, and the specific capability required.
 
 Guidance:
 - Fixable on the spot (flat tire with spare, dead battery, lockout, out of fuel)
@@ -56,7 +60,10 @@ Guidance:
   capability (tire, battery, lockout, fuel).
 - Not driveable, a collision, or a mechanical failure that can't be fixed
   roadside → tow (use collision_recovery/flatbed for collisions, winch if stuck).
-Be concise and practical.
+
+This is a RECOMMENDATION only — nothing is dispatched until a supervisor approves.
+The customerSummary must NOT say a truck has been sent or is "on the way"; frame
+it as the help being arranged and pending confirmation. Be concise and practical.
 `.trim();
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
