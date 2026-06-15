@@ -29,6 +29,17 @@ instead of running one at a time.
 - **Customer notification + audit trail** — approved updates are sent as SMS; every fact, decision,
   and action is logged and persisted.
 
+## Design & tone (requirement)
+
+The interface **must** use a visual theme aligned with the auto-insurance audience: a driver in a
+stressful, often roadside moment who needs to feel **safe and in good hands**. Following category norms
+(Geico, Progressive, Allstate), the palette is **calm, friendly, and trustworthy** — a clean light,
+neutral background; a dependable **blue** as the primary brand color (security, reliability,
+composure); generous whitespace; and high-contrast, legible type. Status uses restrained semantic
+color — green for covered/approved, amber for review, red for not-covered — and never feels alarming.
+The emotional target is **reassurance and competence**, not a technical dashboard. Accessibility (WCAG
+AA contrast, clear focus states) is part of this requirement.
+
 ## Prioritization
 
 Built **trust-first and volume-first**. The riskiest, highest-value AI output — the coverage
