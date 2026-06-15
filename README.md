@@ -3,11 +3,11 @@
 An AI **co-pilot** for car-insurance roadside-assistance claims. A customer talks to a voice agent;
 the agent gathers the claim, checks policy coverage with **cited clauses**, recommends the next best
 action (nearest garage + tow vs. mobile-repair), and a **human supervisor approves** the dispatch from
-a live console. Built as a take-home prototype for an "Insurance Co-Pilot" case study.
+a live console. A reference prototype for an AI-assisted insurance claims workflow.
 
 > **Design stance:** this is a *co-pilot*, not full automation. The AI does the gathering and the
 > reasoning; a human stays in the loop on every dispatch decision. The supervisor console is the
-> centerpiece. UX over UI polish, per the brief.
+> centerpiece, and the focus is on UX (how it works) over UI polish.
 
 📄 [Product Requirements Document](docs/PRD.md) · 🏗 [Architecture](docs/architecture.md)
 
