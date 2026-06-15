@@ -90,6 +90,17 @@ sequenceDiagram
 - **Per-route Lambdas behind one HTTP API.** Each tool is an isolated function; `addRoute()` wires a
   new one in a line. DynamoDB stores the claim snapshot + an append-only audit/notification trail.
 
+## Quality & evals
+
+The reasoning endpoints are evaluated offline against a golden dataset (`evals/`) on a four-dimension
+rubric: **guided outcome** (correct decision), **tool call** (valid structured output + correct
+service/capability/provider), **hallucination** (every cited clause quote must be verbatim in the source
+policy), and **relevance** (Claude Opus LLM-as-judge, report-only). The deterministic dimensions form a
+**regression gate** that runs in CI against the live API on any change to `evals/`, `infra/lambda/`, or
+`data/` — keys stay server-side, so CI needs no secrets. This makes coverage accuracy and
+citation-faithfulness measurable and regression-proof, which is essential for an auditable insurance
+decision. See [../evals/README.md](../evals/README.md).
+
 ## Production note
 
 The prototype calls the Anthropic API directly for velocity. For an enterprise insurer, production

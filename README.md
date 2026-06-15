@@ -90,6 +90,20 @@ for human review.
 
 Model names are env-overridable (`REALTIME_MODEL`, `REALTIME_VOICE`, `ANTHROPIC_MODEL`).
 
+## Evaluating the agent
+
+The agent's reasoning is scored against a golden dataset on a four-dimension rubric — **guided outcome,
+tool call, hallucination** (cited clauses must be verbatim in the policy), and **relevance** (LLM judge).
+A curated regression gate runs in CI on every PR/push that touches the agent.
+
+```bash
+cd evals && npm install
+npm run eval             # full golden set
+npm run eval:regression  # CI gate (exits non-zero on any failure)
+```
+
+See [evals/README.md](evals/README.md) for the rubric and datasets.
+
 ## Limitations (prototype)
 
 - Chrome recommended (WebRTC + mic).
