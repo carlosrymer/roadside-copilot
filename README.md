@@ -9,7 +9,7 @@ a live console. A reference prototype for an AI-assisted insurance claims workfl
 > reasoning; a human stays in the loop on every dispatch decision. The supervisor console is the
 > centerpiece, and the focus is on UX (how it works) over UI polish.
 
-📄 [Product Requirements Document](docs/PRD.md) · 🏗 [Architecture](docs/architecture.md)
+🚗 **[Live prototype](https://carlosrymer.github.io/roadside-copilot/)** (Chrome; allow microphone) · 📄 [Product Requirements Document](docs/PRD.md) · 🏗 [Architecture](docs/architecture.md)
 
 ## How it works
 
