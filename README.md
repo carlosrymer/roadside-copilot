@@ -35,6 +35,7 @@ Customer (voice)  ──WebRTC──►  OpenAI Realtime  ──function calls�
 | `web/`   | Vite + React + TypeScript SPA (deploys to GitHub Pages) |
 | `infra/` | AWS CDK app + Lambda handlers (API Gateway, DynamoDB, Secrets Manager) |
 | `data/`  | Synthetic policies, policy documents, garages, customers |
+| `evals/` | Agent evaluation harness — golden dataset, rubric, CI regression gate |
 | `docs/`  | PRD (≤2 pages) + architecture |
 
 ## Run it
@@ -89,12 +90,31 @@ for human review.
 
 Model names are env-overridable (`REALTIME_MODEL`, `REALTIME_VOICE`, `ANTHROPIC_MODEL`).
 
-## Planned: agent evaluation (fast-follow)
+## Agent evaluation
 
-Scope was held to the core demo workflow. Evaluation — a golden dataset, a rubric (guided outcome,
-tool call, hallucination, relevance), and a CI regression gate — is the **next** step, not part of the
-day-one cut (see the PRD milestones). A working spike lives on the
-[`spike/evals`](../../tree/spike/evals/evals) branch.
+The reasoning endpoints are scored against a golden dataset on a four-dimension
+rubric, with the deterministic dimensions gating CI on every PR.
+
+| Dimension | Question | Gates CI |
+|---|---|---|
+| **Guided outcome** | Right decision / service type? | ✅ |
+| **Tool call** | Well-formed output, correct escalation flag, capable provider? | ✅ |
+| **Hallucination** | Is every cited policy quote verbatim in the source? | ✅ |
+| **Relevance** | Does the response address *this* caller? (LLM-as-judge) | ❌ report only |
+
+```bash
+cd evals && npm install
+npm run eval          # 27 scenarios — offline, free, no API key
+npm run eval:broken   # break the agent 8 ways, see which scorer catches what
+npm test              # tests for the scorers themselves
+```
+
+Runs offline by default against recorded fixtures, so the gate needs no secrets
+and no deployed stack. `npm run record` swaps in real model responses.
+
+📚 **[LESSONS.md](evals/LESSONS.md)** walks the whole harness as eight hands-on
+lessons on how to build evals · **[evals/README.md](evals/README.md)** is the
+design rationale.
 
 ## Limitations (prototype)
 

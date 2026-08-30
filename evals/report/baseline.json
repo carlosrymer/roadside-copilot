@@ -1,0 +1,171 @@
+{
+  "updatedAt": "2026-08-30T18:58:15.445Z",
+  "dataset": "golden — broad coverage of the agent's reasoning surface",
+  "modelSource": "replay",
+  "note": "local/replay",
+  "costUsd": 0.117115,
+  "scenarios": {
+    "cov-premium-flat-tire": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-dead-battery": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-lockout": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-out-of-fuel": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-mechanical-nondriveable": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-collision-nondriveable": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-winch-near-road": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-offroad-excluded": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-premium-tow-distance-exceeded": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-standard-collision-covered": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-standard-fuel": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-standard-winch-excluded": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-standard-last-call": {
+      "ok": false,
+      "guidedOutcome": 0,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-standard-benefit-cap": {
+      "ok": false,
+      "guidedOutcome": 0,
+      "toolCall": 0.5,
+      "hallucination": 1
+    },
+    "cov-basic-flat-tire-covered": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-basic-collision-excluded": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-basic-lockout-excluded": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-basic-tow-distance-limit": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-injury-needs-review": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "cov-unknown-member": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-premium-collision-tow": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-premium-flat-tire-mobile": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-premium-battery-mobile": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-standard-lockout-mobile": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-basic-fuel-mobile": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-premium-stuck-winch": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    },
+    "act-standard-mechanical-tow": {
+      "ok": true,
+      "guidedOutcome": 1,
+      "toolCall": 1,
+      "hallucination": 1
+    }
+  }
+}

@@ -1,0 +1,526 @@
+{
+  "name": "regression — curated CI gate",
+  "description": "The subset that must never break. Borderline judgement calls are excluded on purpose: a gate that fails for defensible answers gets switched off, and a gate people switch off protects nothing.",
+  "scenarios": [
+    {
+      "id": "cov-premium-flat-tire",
+      "description": "Premium member, flat tire, car still driveable — the plain covered case",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "flat_tire",
+        "driveable": true,
+        "locationDescription": "Parking lot off S Congress Ave, Austin"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.3"
+        ],
+        "recommendedService": "tire_change"
+      },
+      "notes": "Squarely covered. If this ever fails, something is badly wrong upstream."
+    },
+    {
+      "id": "cov-premium-dead-battery",
+      "description": "Premium member, dead battery, car will not start",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "dead_battery",
+        "driveable": false,
+        "locationDescription": "Office garage on W 6th St, Austin"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.2"
+        ],
+        "recommendedService": "jump_start"
+      },
+      "notes": "Covered jump-start. 'Not driveable' here means 'won't start', not 'needs a tow'."
+    },
+    {
+      "id": "cov-premium-lockout",
+      "description": "Premium member locked keys in the car",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "lockout",
+        "driveable": true,
+        "locationDescription": "H-E-B parking lot, S Lamar Blvd"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.5"
+        ],
+        "recommendedService": "lockout"
+      },
+      "notes": "Lockout is Premium/Standard only - contrast with cov-basic-lockout-excluded."
+    },
+    {
+      "id": "cov-premium-out-of-fuel",
+      "description": "Premium member out of fuel on a city street",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "out_of_fuel",
+        "driveable": true,
+        "locationDescription": "E Riverside Dr near Pleasant Valley"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.4"
+        ],
+        "recommendedService": "fuel_delivery"
+      },
+      "notes": "On Premium the fuel itself is included; on Standard/Basic the member pays for it."
+    },
+    {
+      "id": "cov-premium-mechanical-nondriveable",
+      "description": "Premium member, mechanical failure, car cannot be driven",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "mechanical_breakdown",
+        "driveable": false,
+        "locationDescription": "Shoulder of Mopac northbound near 45th St"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.1"
+        ],
+        "recommendedService": "tow"
+      },
+      "notes": "Standard tow. Distance is well inside the 100-mile Premium limit."
+    },
+    {
+      "id": "cov-premium-collision-nondriveable",
+      "description": "Premium member in a collision, car not driveable",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "collision",
+        "driveable": false,
+        "locationDescription": "Intersection of Lamar and 38th, Austin"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "expectClauses": [
+          "§3.7"
+        ],
+        "recommendedService": "tow"
+      },
+      "notes": "Collision recovery is a Premium/Standard benefit. Note requiresHumanReview is NOT pinned - a cautious model may reasonably flag a collision."
+    },
+    {
+      "id": "cov-premium-offroad-excluded",
+      "description": "Premium member stuck deep on an unmaintained ranch trail - excluded, but a human must own the denial",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "stuck_offroad",
+        "driveable": false,
+        "locationDescription": "Bogged down on a ranch trail roughly two miles off the nearest maintained road"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "not_covered",
+          "needs_review"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§5.2"
+        ]
+      },
+      "notes": "CRITICAL: the PRD forbids auto-denial. Whatever the decision, requiresHumanReview must be true."
+    },
+    {
+      "id": "cov-premium-tow-distance-exceeded",
+      "description": "Premium member broken down 130 miles from home - past the 100-mile towing limit",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "mechanical_breakdown",
+        "driveable": false,
+        "locationDescription": "I-10 near Junction, roughly 130 miles from Austin"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "partial"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§4.2"
+        ]
+      },
+      "notes": "A limit edge. The service is covered; the distance is not fully covered, which is exactly what 'partial' is for."
+    },
+    {
+      "id": "cov-standard-collision-covered",
+      "description": "Standard member in a collision, car not driveable",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-71920",
+        "problemType": "collision",
+        "driveable": false,
+        "locationDescription": "S 1st St near Ben White Blvd"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "expectClauses": [
+          "§3.6"
+        ],
+        "recommendedService": "tow"
+      },
+      "notes": "Standard includes collision recovery - the differentiator against Basic."
+    },
+    {
+      "id": "cov-standard-fuel",
+      "description": "Standard member out of fuel",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-71920",
+        "problemType": "out_of_fuel",
+        "driveable": true,
+        "locationDescription": "TX-71 near Bee Cave Rd"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.4"
+        ],
+        "recommendedService": "fuel_delivery"
+      },
+      "notes": "Covered, but the member pays for the fuel itself - a detail the summary should not get wrong."
+    },
+    {
+      "id": "cov-standard-winch-excluded",
+      "description": "Standard member needs a winch-out - winching is Premium-only",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-71920",
+        "problemType": "stuck_offroad",
+        "driveable": false,
+        "locationDescription": "Rear wheels in a drainage ditch just off the shoulder of Slaughter Ln"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "not_covered",
+          "needs_review"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§5.5"
+        ]
+      },
+      "notes": "CRITICAL: a plan-gap denial. Must cite the winching exclusion and must not be auto-denied."
+    },
+    {
+      "id": "cov-basic-flat-tire-covered",
+      "description": "Basic member with a flat tire - covered even on the cheapest plan",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-33057",
+        "problemType": "flat_tire",
+        "driveable": true,
+        "locationDescription": "Burnet Rd near Anderson Ln"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "covered"
+        ],
+        "requiresHumanReview": false,
+        "expectClauses": [
+          "§3.3"
+        ],
+        "recommendedService": "tire_change"
+      },
+      "notes": "Guards against the opposite failure: assuming Basic covers nothing."
+    },
+    {
+      "id": "cov-basic-collision-excluded",
+      "description": "Basic member in a collision - collision recovery is not on this plan",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-33057",
+        "problemType": "collision",
+        "driveable": false,
+        "locationDescription": "N Lamar Blvd near Braker Ln"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "not_covered",
+          "needs_review"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§5.3"
+        ]
+      },
+      "notes": "CRITICAL: the headline coverage gap in the demo. Must cite 5.3 and must route to a human."
+    },
+    {
+      "id": "cov-basic-lockout-excluded",
+      "description": "Basic member locked out - lockout is Standard/Premium only",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-33057",
+        "problemType": "lockout",
+        "driveable": true,
+        "locationDescription": "Domain Northside parking garage"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "not_covered",
+          "needs_review"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§5.1"
+        ]
+      },
+      "notes": "CRITICAL: another plan-gap denial."
+    },
+    {
+      "id": "cov-basic-tow-distance-limit",
+      "description": "Basic member 40 miles out with a 15-mile towing limit",
+      "target": "coverage",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-33057",
+        "problemType": "mechanical_breakdown",
+        "driveable": false,
+        "locationDescription": "US-290 eastbound about 40 miles from Austin"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "partial"
+        ],
+        "requiresHumanReview": true,
+        "expectClauses": [
+          "§4.2"
+        ]
+      },
+      "notes": "The tow is covered; most of the distance is not. Classic 'partial'."
+    },
+    {
+      "id": "cov-injury-needs-review",
+      "description": "Collision with a reported injury - safety short-circuits every coverage question",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "collision",
+        "driveable": false,
+        "locationDescription": "I-35 southbound shoulder near Oltorf; passenger has a head injury and is bleeding"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "needs_review"
+        ],
+        "requiresHumanReview": true
+      },
+      "notes": "CRITICAL and the highest-stakes rule in the product: injuries route to a human immediately. Coverage is not the question being asked."
+    },
+    {
+      "id": "cov-unknown-member",
+      "description": "Member ID that does not exist - identity, not coverage",
+      "target": "coverage",
+      "severity": "critical",
+      "input": {
+        "memberId": "MAM-00000",
+        "problemType": "flat_tire",
+        "driveable": true,
+        "locationDescription": "Somewhere on Airport Blvd"
+      },
+      "expected": {
+        "acceptableDecisions": [
+          "needs_review"
+        ],
+        "requiresHumanReview": true,
+        "recommendedService": "none"
+      },
+      "notes": "CRITICAL: handled entirely in code with no model call, so it must never cite a clause. Cheap to test and exactly the sort of guardrail that quietly breaks."
+    },
+    {
+      "id": "act-premium-collision-tow",
+      "description": "Collision, not driveable - needs a collision-recovery capable tow",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "collision",
+        "driveable": false,
+        "locationDescription": "Intersection of Lamar and 38th, Austin"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "tow"
+        ],
+        "requiredCapability": "collision_recovery",
+        "providerMustHaveCapability": "collision_recovery"
+      },
+      "notes": "The provider check is the one that matters: dispatching a garage that cannot recover a wrecked car is a real-world failure a decision-only eval would miss."
+    },
+    {
+      "id": "act-premium-flat-tire-mobile",
+      "description": "Flat tire, driveable - fixable on the spot",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "flat_tire",
+        "driveable": true,
+        "locationDescription": "Parking lot off S Congress Ave, Austin"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "mobile_repair"
+        ],
+        "requiredCapability": "tire",
+        "providerMustHaveCapability": "tire"
+      },
+      "notes": "Sending a tow truck here would be expensive and slow. Guards against the always-tow failure mode."
+    },
+    {
+      "id": "act-premium-battery-mobile",
+      "description": "Dead battery - still a mobile repair even though the car won't move",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "dead_battery",
+        "driveable": false,
+        "locationDescription": "Office garage on W 6th St, Austin"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "mobile_repair"
+        ],
+        "requiredCapability": "battery",
+        "providerMustHaveCapability": "battery"
+      },
+      "notes": "driveable=false is a trap here: 'won't start' is not 'needs a tow'."
+    },
+    {
+      "id": "act-standard-lockout-mobile",
+      "description": "Keys locked in the car - mobile lockout service",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-71920",
+        "problemType": "lockout",
+        "driveable": true,
+        "locationDescription": "H-E-B parking lot, S Lamar Blvd"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "mobile_repair"
+        ],
+        "requiredCapability": "lockout",
+        "providerMustHaveCapability": "lockout"
+      },
+      "notes": "Only some garages do lockouts - the provider capability check has teeth here."
+    },
+    {
+      "id": "act-basic-fuel-mobile",
+      "description": "Out of fuel - fuel delivery, not a tow",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-33057",
+        "problemType": "out_of_fuel",
+        "driveable": true,
+        "locationDescription": "Burnet Rd near Anderson Ln"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "mobile_repair"
+        ],
+        "requiredCapability": "fuel",
+        "providerMustHaveCapability": "fuel"
+      },
+      "notes": "Note next-action does not consult the policy - it decides logistics. Coverage is a separate call, which is why the two are evaluated separately."
+    },
+    {
+      "id": "act-premium-stuck-winch",
+      "description": "Stuck off the shoulder - needs a winch",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-48213",
+        "problemType": "stuck_offroad",
+        "driveable": false,
+        "locationDescription": "Rear wheels sunk in mud about 30 feet off the shoulder of FM 1826"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "tow"
+        ],
+        "requiredCapability": "winch",
+        "providerMustHaveCapability": "winch"
+      },
+      "notes": "Only two garages have a winch. Coverage may be borderline here; logistics are not."
+    },
+    {
+      "id": "act-standard-mechanical-tow",
+      "description": "Mechanical failure, not driveable - straightforward tow",
+      "target": "next_action",
+      "severity": "normal",
+      "input": {
+        "memberId": "MAM-71920",
+        "problemType": "mechanical_breakdown",
+        "driveable": false,
+        "locationDescription": "TX-71 westbound about 40 miles from Austin"
+      },
+      "expected": {
+        "acceptableServiceTypes": [
+          "tow"
+        ],
+        "requiredCapability": "tow",
+        "providerMustHaveCapability": "tow"
+      },
+      "notes": "The baseline tow case."
+    }
+  ]
+}

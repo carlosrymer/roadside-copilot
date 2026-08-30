@@ -90,16 +90,29 @@ sequenceDiagram
 - **Per-route Lambdas behind one HTTP API.** Each tool is an isolated function; `addRoute()` wires a
   new one in a line. DynamoDB stores the claim snapshot + an append-only audit/notification trail.
 
-## Quality & evals (planned fast-follow)
+## Quality & evals
 
-Out of scope for the day-one prototype, but the immediate next step. The plan is to score the reasoning
-endpoints against a golden dataset on a four-dimension rubric — **guided outcome** (correct decision),
-**tool call** (valid structured output + correct service/capability/provider), **hallucination** (every
-cited clause quote verbatim in the source policy), and **relevance** (LLM-as-judge) — with the
-deterministic dimensions forming a **CI regression gate** against the live API (keys stay server-side,
-so CI needs no secrets). This makes coverage accuracy and citation-faithfulness measurable and
-regression-proof, which is essential for an auditable insurance decision. A working spike lives on the
-`spike/evals` branch.
+The reasoning endpoints are scored against a golden dataset (27 scenarios) on a
+four-dimension rubric — **guided outcome** (correct decision), **tool call**
+(valid structured output, correct escalation flag, capable provider),
+**hallucination** (every cited clause quote verbatim in the source policy), and
+**relevance** (LLM-as-judge). The three deterministic dimensions form a CI
+regression gate; the judge is non-deterministic and reports only.
+
+Two structural choices make this work:
+
+- **The prompts are importable.** `lambda/shared/tasks/*.ts` hold the system
+  prompts and output schemas as pure modules with no AWS or bundler dependencies,
+  so the Lambda handler and the evaluator import the *same* constants and cannot
+  drift. Evals run in-process — no deploy, no credentials.
+- **Model responses are replayed.** A one-method `ModelClient` seam swaps the
+  live API for recorded fixtures, so CI runs the gate on every PR with no
+  secrets. Each fixture carries a hash of the prompt it was recorded against;
+  when the prompt changes, the result is flagged stale and the gate rejects it.
+
+Citation faithfulness being *mechanically* checkable — normalize, then substring
+against the member's own policy — is what makes the coverage determination
+auditable rather than merely plausible. See [`evals/`](../evals/README.md).
 
 ## Production note
 

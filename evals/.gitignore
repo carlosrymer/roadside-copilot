@@ -1,0 +1,5 @@
+node_modules/
+# Run reports are build output. The baseline IS committed — it is the thing
+# every future run is compared against.
+report/*.json
+!report/baseline.json
