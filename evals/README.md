@@ -170,8 +170,16 @@ cannot see. LESSONS.md Exercise 4b walks through closing it.
 
 ## CI
 
-`.github/workflows/eval.yml` runs `npm run eval:gate` and `npm test` on PRs
-touching `evals/`, `infra/lambda/` or `data/`. No secrets: replay needs no key.
+The workflow runs typecheck, the scorer meta-tests, then `npm run eval:gate` on
+PRs touching `evals/`, `infra/lambda/` or `data/`. No secrets: replay needs no
+key.
+
+> **Not yet active.** The workflow is parked at [`ci/eval.yml`](./ci/eval.yml)
+> because the token that pushed this branch lacked GitHub's `workflow` scope.
+> Activate it with:
+> ```bash
+> git mv evals/ci/eval.yml .github/workflows/eval.yml && git commit -m "ci(evals): add the eval regression gate workflow"
+> ```
 
 That also bounds what CI catches. It gates prompts, scorers, datasets and
 plumbing — not the model. Model-version drift and real non-determinism only show
