@@ -1,0 +1,298 @@
+{
+  "name": "judge calibration — relevance",
+  "description": "Human-labelled relevance grades used to measure whether the LLM judge agrees with a person. Every response here is a real fixture, degraded in a specific, deliberate way; the grade records how relevant a human found the result.",
+  "labeller": "AUTHORED for teaching, not collected from real annotators. Replace these grades with your own labels — a calibration set inherits the taste of whoever wrote it, and yours should inherit yours.",
+  "scale": {
+    "5": "precisely on-point",
+    "4": "on point with padding",
+    "3": "vague or incomplete",
+    "2": "mostly generic",
+    "1": "off-topic or describes another situation"
+  },
+  "items": [
+    {
+      "id": "cal-01",
+      "scenarioId": "cov-basic-collision-excluded",
+      "humanGrade": 5,
+      "why": "Names the collision, the Basic plan gap, and the escalation. Nothing generic.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "not_covered",
+          "confidence": 0.91,
+          "citedClauses": [
+            {
+              "clause": "§5.3",
+              "quote": "Collision recovery and towing of a vehicle damaged in a collision.\nAccident-related towing is covered under the vehicle's collision coverage, not\nthis roadside plan."
+            }
+          ],
+          "rationale": "Collision recovery is excluded on Basic; accident-related towing falls under the vehicle's collision coverage. Escalating for human review before anything is communicated as a denial.",
+          "recommendedService": "none",
+          "customerSummary": "I want a specialist to walk through your options with you on this one.",
+          "requiresHumanReview": true
+        }
+      }
+    },
+    {
+      "id": "cal-02",
+      "scenarioId": "cov-premium-flat-tire",
+      "humanGrade": 5,
+      "why": "Directly about a flat tire and the spare; the summary is what this caller needs to hear.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.97,
+          "citedClauses": [
+            {
+              "clause": "§3.3",
+              "quote": "On-site replacement of a flat tire with the member's\nserviceable spare."
+            }
+          ],
+          "rationale": "Premium plan covers on-site flat-tire replacement with the member's spare. No limit is near.",
+          "recommendedService": "tire_change",
+          "customerSummary": "You're covered for a tire change - we'll get someone out to swap on your spare.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-03",
+      "scenarioId": "cov-injury-needs-review",
+      "humanGrade": 5,
+      "why": "Leads with 911 and the injury. For this scenario, nothing else would be on point.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "needs_review",
+          "confidence": 0.4,
+          "citedClauses": [
+            {
+              "clause": "§3.7",
+              "quote": "Following a collision, towing under §3.1 is covered\nregardless of fault, including recovery of a non-driveable vehicle."
+            }
+          ],
+          "rationale": "An injury is reported. Coverage is not the operative question - this must go to a human immediately and the caller should be directed to 911.",
+          "recommendedService": "tow",
+          "customerSummary": "Please call 911 first if anyone is hurt. I'm bringing a specialist onto this right now.",
+          "requiresHumanReview": true
+        }
+      }
+    },
+    {
+      "id": "cal-04",
+      "scenarioId": "cov-basic-tow-distance-limit",
+      "humanGrade": 4,
+      "why": "On point about the mileage limit, but the summary pads with boilerplate about confirming.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "partial",
+          "confidence": 0.87,
+          "citedClauses": [
+            {
+              "clause": "§4.2",
+              "quote": "Towing is covered up to **15 miles** per Disablement.\nMileage beyond 15 miles is billed to the member at the prevailing per-mile rate."
+            },
+            {
+              "clause": "§3.1",
+              "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility."
+            }
+          ],
+          "rationale": "Towing is covered, but only the first 15 miles; the remaining distance is billed to the member. Flagging for supervisor confirmation.",
+          "recommendedService": "tow",
+          "customerSummary": "The tow is covered up to 15 miles - past that there's a per-mile charge we'll confirm with you. We appreciate your patience and value your membership with us.",
+          "requiresHumanReview": true
+        }
+      }
+    },
+    {
+      "id": "cal-05",
+      "scenarioId": "cov-standard-fuel",
+      "humanGrade": 4,
+      "why": "Correct and relevant, though the rationale restates the policy more than the situation.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.94,
+          "citedClauses": [
+            {
+              "clause": "§3.4",
+              "quote": "Delivery of fuel or fluids to reach the nearest\nstation. The member pays for the fuel or fluids delivered."
+            }
+          ],
+          "rationale": "Fuel delivery appears in the list of covered services for this policy form.",
+          "recommendedService": "fuel_delivery",
+          "customerSummary": "Fuel delivery is covered - you'll just pay for the fuel itself.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-06",
+      "scenarioId": "cov-premium-lockout",
+      "humanGrade": 3,
+      "why": "Coverage is right but the response never mentions being locked out; it could be about anything.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.95,
+          "citedClauses": [
+            {
+              "clause": "§3.5",
+              "quote": "On-site assistance to gain entry when keys are lost, broken, or\nlocked inside the Covered Vehicle."
+            }
+          ],
+          "rationale": "This request falls within the covered services on the member's plan.",
+          "recommendedService": "lockout",
+          "customerSummary": "Good news - this is covered under your plan.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-07",
+      "scenarioId": "cov-premium-mechanical-nondriveable",
+      "humanGrade": 3,
+      "why": "Vague. Says 'covered' without engaging with the breakdown or the tow.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.94,
+          "citedClauses": [
+            {
+              "clause": "§3.1",
+              "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility, or to a\nfacility of the member's choice within the distance limit in §4.2."
+            }
+          ],
+          "rationale": "The plan covers this type of request.",
+          "recommendedService": "tow",
+          "customerSummary": "You're covered.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-08",
+      "scenarioId": "cov-standard-collision-covered",
+      "humanGrade": 2,
+      "why": "Pure boilerplate; would read identically for a flat tire or a lockout.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.92,
+          "citedClauses": [
+            {
+              "clause": "§3.6",
+              "quote": "Following a collision, towing under §3.1 is covered\nregardless of fault."
+            }
+          ],
+          "rationale": "Meridian Auto Mutual is committed to supporting members during roadside events. Coverage has been assessed against the applicable policy form.",
+          "recommendedService": "tow",
+          "customerSummary": "Thank you for contacting Meridian Auto Mutual. Your request has been assessed.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-09",
+      "scenarioId": "cov-basic-flat-tire-covered",
+      "humanGrade": 2,
+      "why": "Generic reassurance with no detail belonging to this case.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.96,
+          "citedClauses": [
+            {
+              "clause": "§3.3",
+              "quote": "On-site replacement of a flat tire with the member's\nserviceable spare. If no serviceable spare is available, towing under §3.1\napplies."
+            }
+          ],
+          "rationale": "Standard processing applied.",
+          "recommendedService": "tire_change",
+          "customerSummary": "We're here to help and will be in touch shortly.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-10",
+      "scenarioId": "cov-premium-out-of-fuel",
+      "humanGrade": 1,
+      "why": "Describes a dead battery. Wrong situation entirely.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "covered",
+          "confidence": 0.95,
+          "citedClauses": [
+            {
+              "clause": "§3.4",
+              "quote": "Delivery of enough fuel or fluids to reach the\nnearest station. Cost of fuel/fluids is included under this plan."
+            }
+          ],
+          "rationale": "A dead battery is covered under the jump-start provision of the plan.",
+          "recommendedService": "fuel_delivery",
+          "customerSummary": "We'll send someone to jump-start your car.",
+          "requiresHumanReview": false
+        }
+      }
+    },
+    {
+      "id": "cal-11",
+      "scenarioId": "cov-premium-offroad-excluded",
+      "humanGrade": 1,
+      "why": "Talks about a lockout for a member stuck on a ranch trail.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "not_covered",
+          "confidence": 0.88,
+          "citedClauses": [
+            {
+              "clause": "§5.2",
+              "quote": "Disablement occurring during racing, off-road driving, or on non-maintained\nterrain."
+            },
+            {
+              "clause": "§3.6",
+              "quote": "Extraction when the Covered Vehicle is stuck\nwithin 100 feet of a paved or maintained road. Recovery from off-road or\nnon-maintained terrain is excluded under §5."
+            }
+          ],
+          "rationale": "Lockout assistance is not included on this policy form.",
+          "recommendedService": "none",
+          "customerSummary": "Unfortunately lockout service isn't part of your plan.",
+          "requiresHumanReview": true
+        }
+      }
+    },
+    {
+      "id": "cal-12",
+      "scenarioId": "cov-standard-winch-excluded",
+      "humanGrade": 4,
+      "why": "Relevant to the winch-out and the plan gap, slightly weakened by a vague closing line.",
+      "response": {
+        "memberFound": true,
+        "determination": {
+          "decision": "not_covered",
+          "confidence": 0.9,
+          "citedClauses": [
+            {
+              "clause": "§5.5",
+              "quote": "Winching or extraction of any kind. (Available on the Premium plan only.)"
+            }
+          ],
+          "rationale": "Winching and extraction of any kind are excluded on the Standard plan. Escalating rather than denying outright.",
+          "recommendedService": "none",
+          "customerSummary": "Let me get a specialist on this with you. Someone will follow up in due course.",
+          "requiresHumanReview": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+# CI workflow for the eval regression gate.
+#
+# This file belongs at .github/workflows/eval.yml. It is parked here because the
+# session that generated it pushed with a token lacking GitHub's `workflow`
+# scope, which forbids creating or updating files under .github/workflows/.
+#
+# To activate it:
+#     git mv evals/ci/eval.yml .github/workflows/eval.yml
+#     git commit -m "ci(evals): add the eval regression gate workflow"
+#     git push
+#
+# (The lines above this one are the only difference from the intended file.)
+
+name: Agent eval (regression gate)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'evals/**'
+      - 'infra/lambda/**'
+      - 'data/**'
+      - '.github/workflows/eval.yml'
+  pull_request:
+    paths:
+      - 'evals/**'
+      - 'infra/lambda/**'
+      - 'data/**'
+      - '.github/workflows/eval.yml'
+  workflow_dispatch:
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: evals
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: evals/package-lock.json
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Who grades the grader: if the scorers are broken, the gate below is
+      # meaningless, so it runs first.
+      - name: Meta-eval — test the scorers themselves
+        run: npm test
+
+      # Replayed fixtures, so this needs no secrets and no deployed stack. It
+      # gates prompts, scorers, datasets and plumbing — not the model itself.
+      - name: Regression gate
+        run: npm run eval:gate
+
+      - name: Upload run report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: evals/report/last-run.json
+          if-no-files-found: ignore

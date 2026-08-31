@@ -4,6 +4,11 @@ import garagesJson from '../../../data/garages.json';
 import basicDoc from '../../../data/policy-docs/basic.md';
 import standardDoc from '../../../data/policy-docs/standard.md';
 import premiumDoc from '../../../data/policy-docs/premium.md';
+import { distanceMiles, rankProviders, selectProvider, type Coord, type Ranked } from './geo.js';
+import type { MemberFacts } from './tasks/coverage.js';
+
+export { distanceMiles };
+export type { Coord };
 
 export interface Vehicle {
   year: number;
@@ -78,42 +83,39 @@ export function getMemberContext(memberId: string): MemberContext | null {
   return { customer, policy, policyDoc: policyDocs[policy.document] ?? '' };
 }
 
-interface Coord {
-  lat: number;
-  lng: number;
-}
+// ---------------------------------------------------------------------------
+// Provider ranking. The maths lives in `geo.ts` (pure, data-free) so the eval
+// harness can reuse the exact ranking logic; these wrappers just bind it to the
+// bundled garage list.
+// ---------------------------------------------------------------------------
 
-/** Great-circle distance in miles between two coordinates. */
-export function distanceMiles(a: Coord, b: Coord): number {
-  const R = 3958.8;
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const dLat = toRad(b.lat - a.lat);
-  const dLng = toRad(b.lng - a.lng);
-  const lat1 = toRad(a.lat);
-  const lat2 = toRad(b.lat);
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
+export type RankedGarage = Ranked<Garage>;
 
-export interface RankedGarage extends Garage {
-  distanceMiles: number;
-  etaMinutes: number;
-}
-
-/**
- * Rank providers near an origin, optionally requiring a capability. ETA is the
- * provider's dispatch time plus a rough drive estimate at 35 mph.
- */
 export function rankGarages(origin: Coord, capability?: string): RankedGarage[] {
-  const pool = capability ? garages.filter((g) => g.capabilities.includes(capability)) : garages;
-  return pool
-    .map((g) => {
-      const miles = distanceMiles(origin, g);
-      return {
-        ...g,
-        distanceMiles: Math.round(miles * 10) / 10,
-        etaMinutes: g.avgDispatchMinutes + Math.round((miles / 35) * 60),
-      };
-    })
-    .sort((a, b) => a.distanceMiles - b.distanceMiles);
+  return rankProviders(garages, origin, capability);
+}
+
+/** Best provider for a capability, degrading to any tow, then to anyone. */
+export function selectGarage(origin: Coord, capability?: string): RankedGarage[] {
+  return selectProvider(garages, origin, capability);
+}
+
+/** Project a member context onto the facts the coverage prompt renders. */
+export function toMemberFacts(ctx: MemberContext): MemberFacts {
+  return {
+    name: ctx.customer.name,
+    memberId: ctx.customer.memberId,
+    policyStatus: ctx.customer.policyStatus,
+    plan: ctx.policy.plan,
+    policyForm: ctx.policy.policyForm,
+    vehicle: {
+      year: ctx.customer.vehicle.year,
+      make: ctx.customer.vehicle.make,
+      model: ctx.customer.vehicle.model,
+      registered: ctx.customer.vehicle.registered,
+      use: ctx.customer.vehicle.use,
+    },
+    serviceCallsUsedThisYear: ctx.customer.serviceCallsUsedThisYear,
+    serviceCallsPerYear: ctx.policy.summary.serviceCallsPerYear,
+  };
 }

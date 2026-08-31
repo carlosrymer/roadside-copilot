@@ -1,0 +1,462 @@
+{
+  "provenance": "authored",
+  "note": "Hand-authored stand-in responses so the harness runs with no API key and no spend. Quotes are genuine verbatim policy text, but the responses were written, not observed - they are not evidence about the real agent. Replace them with `npm run record`.",
+  "model": "claude-opus-4-8",
+  "recordedAt": null,
+  "entries": {
+    "cov-premium-flat-tire": {
+      "requestHash": "sha256:1973b40a2dca6c1e",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.97,
+        "citedClauses": [
+          {
+            "clause": "§3.3",
+            "quote": "On-site replacement of a flat tire with the member's\nserviceable spare."
+          }
+        ],
+        "rationale": "Premium plan covers on-site flat-tire replacement with the member's spare. No limit is near.",
+        "recommendedService": "tire_change",
+        "customerSummary": "You're covered for a tire change - we'll get someone out to swap on your spare.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-dead-battery": {
+      "requestHash": "sha256:77c87d8096263a43",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.96,
+        "citedClauses": [
+          {
+            "clause": "§3.2",
+            "quote": "On-site battery jump-start. If the battery cannot\nhold a charge, towing under §3.1 applies."
+          }
+        ],
+        "rationale": "Jump-start is a covered service. If the battery will not hold a charge, towing under 3.1 would follow.",
+        "recommendedService": "jump_start",
+        "customerSummary": "You're covered - we'll send someone to jump-start the car.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-lockout": {
+      "requestHash": "sha256:206aae1dbe423024",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.95,
+        "citedClauses": [
+          {
+            "clause": "§3.5",
+            "quote": "On-site assistance to gain entry when keys are lost, broken, or\nlocked inside the Covered Vehicle."
+          }
+        ],
+        "rationale": "Premium includes lockout assistance with no per-occurrence labor cap.",
+        "recommendedService": "lockout",
+        "customerSummary": "Good news - lockout help is covered on your plan.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-out-of-fuel": {
+      "requestHash": "sha256:336da40dc9a9ceee",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.95,
+        "citedClauses": [
+          {
+            "clause": "§3.4",
+            "quote": "Delivery of enough fuel or fluids to reach the\nnearest station. Cost of fuel/fluids is included under this plan."
+          }
+        ],
+        "rationale": "Fuel delivery is covered and, on Premium, the cost of the fuel is included.",
+        "recommendedService": "fuel_delivery",
+        "customerSummary": "You're covered - we'll bring you enough fuel to reach a station.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-mechanical-nondriveable": {
+      "requestHash": "sha256:22dae119eb05f4bc",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.94,
+        "citedClauses": [
+          {
+            "clause": "§3.1",
+            "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility, or to a\nfacility of the member's choice within the distance limit in §4.2."
+          }
+        ],
+        "rationale": "The vehicle cannot be made driveable roadside, so towing to a repair facility is covered.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered for a tow to a nearby repair shop.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-collision-nondriveable": {
+      "requestHash": "sha256:0c209f300de11e18",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.93,
+        "citedClauses": [
+          {
+            "clause": "§3.7",
+            "quote": "Following a collision, towing under §3.1 is covered\nregardless of fault, including recovery of a non-driveable vehicle."
+          }
+        ],
+        "rationale": "Collision recovery, including a non-driveable vehicle, is covered regardless of fault.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered - we'll arrange recovery and a tow for the car.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-winch-near-road": {
+      "requestHash": "sha256:070d371a8b9e3304",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.78,
+        "citedClauses": [
+          {
+            "clause": "§3.6",
+            "quote": "Extraction when the Covered Vehicle is stuck\nwithin 100 feet of a paved or maintained road. Recovery from off-road or\nnon-maintained terrain is excluded under §5."
+          }
+        ],
+        "rationale": "The vehicle is within 100 feet of a maintained road, so extraction falls under the winching benefit rather than the off-road exclusion.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered - we'll arrange a winch-out from the shoulder.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-offroad-excluded": {
+      "requestHash": "sha256:bc952e47397e7c77",
+      "value": {
+        "decision": "not_covered",
+        "confidence": 0.88,
+        "citedClauses": [
+          {
+            "clause": "§5.2",
+            "quote": "Disablement occurring during racing, off-road driving, or on non-maintained\nterrain."
+          },
+          {
+            "clause": "§3.6",
+            "quote": "Extraction when the Covered Vehicle is stuck\nwithin 100 feet of a paved or maintained road. Recovery from off-road or\nnon-maintained terrain is excluded under §5."
+          }
+        ],
+        "rationale": "Recovery from non-maintained terrain two miles off-road is excluded; 3.6 extends only 100 feet from a maintained road. Routing to a human before communicating any denial.",
+        "recommendedService": "none",
+        "customerSummary": "I need a specialist to look at this one with you before we confirm anything.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-premium-tow-distance-exceeded": {
+      "requestHash": "sha256:751decde9764eabf",
+      "value": {
+        "decision": "partial",
+        "confidence": 0.86,
+        "citedClauses": [
+          {
+            "clause": "§4.2",
+            "quote": "Towing is covered up to **100 miles** per Disablement.\nMileage beyond 100 miles is billed to the member at the prevailing per-mile rate."
+          },
+          {
+            "clause": "§3.1",
+            "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility, or to a\nfacility of the member's choice within the distance limit in §4.2."
+          }
+        ],
+        "rationale": "Towing is covered, but the distance exceeds the 100-mile limit; mileage beyond that is billed to the member. Flagging for supervisor confirmation.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered for the tow - there may be a per-mile charge past 100 miles, which we'll confirm.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-standard-collision-covered": {
+      "requestHash": "sha256:0a3e44cb9d7268e2",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.92,
+        "citedClauses": [
+          {
+            "clause": "§3.6",
+            "quote": "Following a collision, towing under §3.1 is covered\nregardless of fault."
+          }
+        ],
+        "rationale": "Collision towing is covered on the Standard plan regardless of fault.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered - we'll arrange a tow for the car.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-standard-fuel": {
+      "requestHash": "sha256:392ab65a7e127761",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.94,
+        "citedClauses": [
+          {
+            "clause": "§3.4",
+            "quote": "Delivery of fuel or fluids to reach the nearest\nstation. The member pays for the fuel or fluids delivered."
+          }
+        ],
+        "rationale": "Fuel delivery is covered; the member pays for the fuel delivered.",
+        "recommendedService": "fuel_delivery",
+        "customerSummary": "Fuel delivery is covered - you'll just pay for the fuel itself.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-standard-winch-excluded": {
+      "requestHash": "sha256:6b6e3f014e54d330",
+      "value": {
+        "decision": "not_covered",
+        "confidence": 0.9,
+        "citedClauses": [
+          {
+            "clause": "§5.5",
+            "quote": "Winching or extraction of any kind. (Available on the Premium plan only.)"
+          }
+        ],
+        "rationale": "Winching and extraction of any kind are excluded on the Standard plan. Escalating rather than denying outright.",
+        "recommendedService": "none",
+        "customerSummary": "Let me get a specialist on this with you before we confirm what's possible.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-standard-last-call": {
+      "requestHash": "sha256:f3e204718c7f2c90",
+      "value": {
+        "decision": "partial",
+        "confidence": 0.71,
+        "citedClauses": [
+          {
+            "clause": "§4.1",
+            "quote": "Up to **four (4)** Service Calls per policy year."
+          },
+          {
+            "clause": "§3.2",
+            "quote": "On-site battery jump-start. If the battery cannot\nhold a charge, towing under §3.1 applies."
+          }
+        ],
+        "rationale": "This is the member's fourth service call against a four-call annual limit, so the benefit may be at its cap.",
+        "recommendedService": "jump_start",
+        "customerSummary": "This looks like your last covered call for the year - let me confirm the details.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-standard-benefit-cap": {
+      "requestHash": "sha256:4fb7839c4ddbd6a8",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.83,
+        "citedClauses": [
+          {
+            "clause": "§3.1",
+            "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility."
+          }
+        ],
+        "rationale": "The vehicle cannot be driven, so towing to a repair facility is covered, and 40 miles is inside the 50-mile limit.",
+        "recommendedService": "tow",
+        "customerSummary": "You're covered for the tow to a nearby shop.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-basic-flat-tire-covered": {
+      "requestHash": "sha256:2e0131b139176944",
+      "value": {
+        "decision": "covered",
+        "confidence": 0.96,
+        "citedClauses": [
+          {
+            "clause": "§3.3",
+            "quote": "On-site replacement of a flat tire with the member's\nserviceable spare. If no serviceable spare is available, towing under §3.1\napplies."
+          }
+        ],
+        "rationale": "Flat-tire replacement with the member's spare is covered on the Basic plan.",
+        "recommendedService": "tire_change",
+        "customerSummary": "You're covered for a tire change using your spare.",
+        "requiresHumanReview": false
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-basic-collision-excluded": {
+      "requestHash": "sha256:d7b615a0abe6c9a5",
+      "value": {
+        "decision": "not_covered",
+        "confidence": 0.91,
+        "citedClauses": [
+          {
+            "clause": "§5.3",
+            "quote": "Collision recovery and towing of a vehicle damaged in a collision.\nAccident-related towing is covered under the vehicle's collision coverage, not\nthis roadside plan."
+          }
+        ],
+        "rationale": "Collision recovery is excluded on Basic; accident-related towing falls under the vehicle's collision coverage. Escalating for human review before anything is communicated as a denial.",
+        "recommendedService": "none",
+        "customerSummary": "I want a specialist to walk through your options with you on this one.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-basic-lockout-excluded": {
+      "requestHash": "sha256:4b1f51b0bcaf24ed",
+      "value": {
+        "decision": "not_covered",
+        "confidence": 0.92,
+        "citedClauses": [
+          {
+            "clause": "§5.1",
+            "quote": "Lockout assistance. (Available on Standard and Premium plans.)"
+          }
+        ],
+        "rationale": "Lockout assistance is excluded on the Basic plan and available on Standard and Premium. Routing to a human before confirming.",
+        "recommendedService": "none",
+        "customerSummary": "Let me get someone to go over your options with you here.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-basic-tow-distance-limit": {
+      "requestHash": "sha256:eef866881d438182",
+      "value": {
+        "decision": "partial",
+        "confidence": 0.87,
+        "citedClauses": [
+          {
+            "clause": "§4.2",
+            "quote": "Towing is covered up to **15 miles** per Disablement.\nMileage beyond 15 miles is billed to the member at the prevailing per-mile rate."
+          },
+          {
+            "clause": "§3.1",
+            "quote": "When the Covered Vehicle cannot be made driveable at the\nroadside, it will be towed to the nearest qualified repair facility."
+          }
+        ],
+        "rationale": "Towing is covered, but only the first 15 miles; the remaining distance is billed to the member. Flagging for supervisor confirmation.",
+        "recommendedService": "tow",
+        "customerSummary": "The tow is covered up to 15 miles - past that there's a per-mile charge we'll confirm with you.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "cov-injury-needs-review": {
+      "requestHash": "sha256:424a1d73f723cbb9",
+      "value": {
+        "decision": "needs_review",
+        "confidence": 0.4,
+        "citedClauses": [
+          {
+            "clause": "§3.7",
+            "quote": "Following a collision, towing under §3.1 is covered\nregardless of fault, including recovery of a non-driveable vehicle."
+          }
+        ],
+        "rationale": "An injury is reported. Coverage is not the operative question - this must go to a human immediately and the caller should be directed to 911.",
+        "recommendedService": "tow",
+        "customerSummary": "Please call 911 first if anyone is hurt. I'm bringing a specialist onto this right now.",
+        "requiresHumanReview": true
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-premium-collision-tow": {
+      "requestHash": "sha256:6f990ac22440ec51",
+      "value": {
+        "serviceType": "tow",
+        "requiredCapability": "collision_recovery",
+        "reasoning": "A collision-damaged, non-driveable vehicle needs recovery and flatbed transport, not roadside repair.",
+        "customerSummary": "I'm arranging a recovery tow for you now - it needs a supervisor's confirmation before it's dispatched."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-premium-flat-tire-mobile": {
+      "requestHash": "sha256:5e7e126b48f9cbcc",
+      "value": {
+        "serviceType": "mobile_repair",
+        "requiredCapability": "tire",
+        "reasoning": "A flat tire on an otherwise driveable car is a roadside fix with the member's spare.",
+        "customerSummary": "I'm arranging a mobile tire change - it's pending confirmation from a supervisor."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-premium-battery-mobile": {
+      "requestHash": "sha256:b6925e6c39f385c7",
+      "value": {
+        "serviceType": "mobile_repair",
+        "requiredCapability": "battery",
+        "reasoning": "A dead battery is a roadside jump-start; the vehicle is otherwise sound.",
+        "customerSummary": "I'm arranging a mobile jump-start - a supervisor just needs to confirm it."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-standard-lockout-mobile": {
+      "requestHash": "sha256:10cea68e4d675245",
+      "value": {
+        "serviceType": "mobile_repair",
+        "requiredCapability": "lockout",
+        "reasoning": "Keys locked inside an otherwise driveable car is an on-site entry job.",
+        "customerSummary": "I'm arranging lockout help for you - it's pending a supervisor's confirmation."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-basic-fuel-mobile": {
+      "requestHash": "sha256:9c3fee84d6175f90",
+      "value": {
+        "serviceType": "mobile_repair",
+        "requiredCapability": "fuel",
+        "reasoning": "Running out of fuel is resolved by delivering enough fuel to reach a station.",
+        "customerSummary": "I'm arranging a fuel delivery - a supervisor needs to confirm before it goes out."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-premium-stuck-winch": {
+      "requestHash": "sha256:c3c93e2f07adeb8a",
+      "value": {
+        "serviceType": "tow",
+        "requiredCapability": "winch",
+        "reasoning": "The vehicle is bogged down and must be extracted before it can be driven or towed.",
+        "customerSummary": "I'm arranging a winch-out for you - it's pending a supervisor's confirmation."
+      },
+      "usage": null,
+      "latencyMs": null
+    },
+    "act-standard-mechanical-tow": {
+      "requestHash": "sha256:6ef0389ee9ed3466",
+      "value": {
+        "serviceType": "tow",
+        "requiredCapability": "tow",
+        "reasoning": "A mechanical failure that cannot be repaired roadside requires a tow to a repair facility.",
+        "customerSummary": "I'm arranging a tow to a nearby shop - a supervisor will confirm it shortly."
+      },
+      "usage": null,
+      "latencyMs": null
+    }
+  }
+}
